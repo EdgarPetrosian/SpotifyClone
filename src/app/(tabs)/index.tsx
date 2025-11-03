@@ -9,6 +9,7 @@ export default function HomeScreen() {
       <FlatList
         data={tracks}
         renderItem={({ item }) => <TrackListItem track={item} />}
+        showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
   );

@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import TrackListItem from '@/src/components/TrackListItem';
 import { tracks } from '@/src/constants/tracks';
@@ -19,12 +19,15 @@ export default function TabSearchScreen() {
           onChangeText={setSearch}
           style={styles.input}
         />
-        <Text>Cancel</Text>
+        <Pressable onPress={() => setSearch('')}>
+          <Text>Cancel</Text>
+        </Pressable>
       </View>
 
       <FlatList
         data={tracks}
         renderItem={({ item }) => <TrackListItem track={item} />}
+        showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
   );

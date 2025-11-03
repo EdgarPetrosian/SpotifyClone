@@ -9,6 +9,7 @@ export default function TabFavoritesScreen() {
       <FlatList
         data={tracks}
         renderItem={({ item }) => <TrackListItem track={item} />}
+        showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
   );
