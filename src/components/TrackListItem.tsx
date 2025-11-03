@@ -7,7 +7,6 @@ type TrackListItemProps = {
 };
 
 const TrackListItem = ({ track }: TrackListItemProps) => {
-  console.log('track -------->     ', track)
   const image = track.album?.images?.[0];
   const { setTrack } = usePlayerContext();
 

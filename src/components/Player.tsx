@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useAudioPlayer } from 'expo-audio';
 import { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { usePlayerContext } from '../providers/PlayerProvider';
@@ -6,8 +7,6 @@ import { usePlayerContext } from '../providers/PlayerProvider';
 const Player = () => {
 
     const { track } = usePlayerContext();
-    console.log('track ===== ', track)
-
     if (!track) {
         return null;
     }
@@ -91,7 +90,3 @@ const styles = StyleSheet.create({
 });
 
 export default Player;
-
-function useAudioPlayer(preview_url: string | null | undefined) {
-    throw new Error('Function not implemented.');
-}
