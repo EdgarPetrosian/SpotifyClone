@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useAudioPlayer } from 'expo-audio';
-import { useEffect, useState } from 'react';
+import { AudioPlayer, useAudioPlayer } from 'expo-audio';
+import { memo, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { usePlayerContext } from '../providers/PlayerProvider';
 
@@ -14,21 +14,36 @@ const Player = () => {
     const image = track.album.images?.[0];
     const player = useAudioPlayer(track?.preview_url);
 
-    const [sound, setSound] = useState();
-
-    const playTrack = async () => {
-
-        if (!track?.preview_url) {
-            return;
-        }
-        setSound(player);
-
-        player.play();
-    };
+    const [isPause, setIsPause] = useState(false);
+    const [playerData, setPlayerData] = useState<AudioPlayer>();
 
     useEffect(() => {
         playTrack();
     }, [track]);
+
+    const playTrack = async () => {
+        player.seekTo(0);
+        if (!track?.preview_url) {
+            return;
+        }
+        // console.log('playTrack', JSON.stringify(player, null, 2))
+        player.play();
+        setPlayerData(player)
+        setIsPause(player?.paused)
+    };
+
+    const onPlayPause = async () => {
+        if (!track?.preview_url) {
+            return;
+        }
+
+        player.pause();
+        setIsPause(player?.paused)
+    };
+
+    const addToFavorite = () => {
+        // console.log('playerData', playerData);
+    }
 
     return (
         <View style={styles.container}>
@@ -41,14 +56,16 @@ const Player = () => {
                 </View>
 
                 <Ionicons
+                    onPress={addToFavorite}
                     name={'heart-outline'}
                     size={20}
                     color={'white'}
                     style={{ marginHorizontal: 10 }}
                 />
                 <Ionicons
+                    onPress={isPause ? playTrack : onPlayPause}
                     disabled={!track?.preview_url}
-                    name={'play'}
+                    name={isPause ? 'play' : 'pause'}
                     size={22}
                     color={track?.preview_url ? 'white' : 'gray'}
                 />
@@ -89,4 +106,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Player;
+export default memo(Player);
