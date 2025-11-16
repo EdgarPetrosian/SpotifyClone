@@ -12,11 +12,10 @@ import { usePlayerContext } from '../providers/PlayerProvider';
 const AdvancedPlayer = () => {
 
   const { track } = usePlayerContext();
-  const player = useAudioPlayer(track?.preview_url, { downloadFirst: false });
-
   if (!track) {
     return null;
   }
+  const player = useAudioPlayer(track?.preview_url, { downloadFirst: false });
 
   const image = track.album.images?.[0];
 
